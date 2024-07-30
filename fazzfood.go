@@ -2,8 +2,7 @@ package main
 
 import "fmt"
 
-func fazzfood(harga int, voucher string, jarak int, pajak bool) {
-	fmt.Println("harga : ", harga)
+func calcharga(harga int, voucher string) int {
 	diskon := 0
 	if voucher == "FAZZFOOD50" {
 		if harga > 50000 {
@@ -21,19 +20,35 @@ func fazzfood(harga int, voucher string, jarak int, pajak bool) {
 			}
 		}
 	}
-
-	fmt.Println("potongan : ", diskon)
+	return diskon
+}
+func calcjarak(jarak int) int {
 	tarif := 5000
 
 	if jarak > 2 {
 		tarif = tarif + (jarak-2)*3000
 	}
-	fmt.Println("biaya antar : ", tarif)
-
+	return tarif
+}
+func calcpajak(pajak bool, harga int) int {
 	biayapajak := 0
 	if pajak {
 		biayapajak = harga * 5 / 100
 	}
+	return biayapajak
+}
+
+func fazzfood(harga int, voucher string, jarak int, pajak bool) {
+	diskon := calcharga(harga, voucher)
+	tarif := calcjarak(jarak)
+	biayapajak := calcpajak(pajak, harga)
+
+	fmt.Println("harga : ", harga)
+
+	fmt.Println("potongan : ", diskon)
+
+	fmt.Println("biaya antar : ", tarif)
+
 	fmt.Println("Pajak : ", biayapajak)
 
 	var subtotal = harga - diskon + tarif + biayapajak
